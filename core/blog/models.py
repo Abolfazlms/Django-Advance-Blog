@@ -1,7 +1,8 @@
 from django.db import models
+from accounts.models import User
 
 # Create your models here.
-class Post(models.model):
+class Post(models.Model):
     '''
     This is a class to define posts for blog app
     '''
@@ -20,7 +21,7 @@ class Post(models.model):
     def __str__(self):
         return self.title
     
-class Category(models.model):
+class Category(models.Model):
     name = models.CharField(max_length=250)
     def __str__(self):
         return self.name
