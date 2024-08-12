@@ -14,5 +14,7 @@ urlpatterns = [
     # path('go-to-maktabkhooneh',RedirectView.as_view(url='https://www.maktabkhooneh.com'),name='go-to-maktabkhooneh')
     # path('go-to-index',RedirectView.as_view(pattern_name='blog:cbv-index'),name='go-to-index')
     path('go-to-maktabkhooneh/<int:pk>',views.RedirectToMaktabkhooneh.as_view(),name='go-to-maktabkhooneh'),
-    path('post/',views.PostList.as_view(),name='post-list')
+    path('post/',views.PostListView.as_view(),name='post-list'),
+    path('post/<int:pk>/',views.PostDetailView.as_view(),name='post-detail'),
+    path('post/create/',views.PostCreateView.as_view(),name='post-create')
 ]

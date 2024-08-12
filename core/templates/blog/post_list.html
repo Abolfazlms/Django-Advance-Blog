@@ -13,8 +13,11 @@
         {% for post in posts%}
         <li>
             <div>
-                <h2>{{post.title}}</h2>
-                <p>{{post.content}} {{post.created_date}}</p>
+                <a href="{% url 'blog:post-detail' pk=post.id %}">
+                    <h2>{{post.id}} - {{post.title}}</h2>
+                </a>
+            </div>
+            <p>{{post.content}} {{post.published_date}}</p>
             </div>
         </li>
         {%endfor%}

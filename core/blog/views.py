@@ -1,8 +1,12 @@
 from typing import Any
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.generic.base import TemplateView, RedirectView
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView, FormView
+from django.views.generic.edit import FormView
 from .models import Post
+from .forms import PostForms
+
 # Create your views here.
 
 #Function Base View show a template
@@ -39,7 +43,7 @@ class RedirectToMaktabkhooneh(RedirectView):
         print(post)
         return super().get_redirect_url(*args,**kwargs)
     
-class PostList(ListView):
+class PostListView(ListView):
     # model = Post
     queryset = Post.objects.all()
     context_object_name = 'posts'
@@ -49,3 +53,15 @@ class PostList(ListView):
     #     posts = Post.objects.filter(status=True)
     #     # return super().get_queryset()
     #     return posts
+
+class PostDetailView(DetailView):
+    model = Post
+
+class PostCreateView(FormView):
+    template_name = 'blog/contact.html'
+    form_class = PostForms
+    success_url = '/blog/post/'
+
+    def form_valid(self,form):
+        form.save()
+        return super().form_valid(form)
