@@ -2,7 +2,7 @@ from django.db import models
 # from accounts.models import User
 # from django.conf import settings
 from django.contrib.auth import get_user_model
-
+# from accounts.models import Profile
 
 User = get_user_model()
 # Create your models here.
@@ -10,7 +10,8 @@ class Post(models.Model):
     '''
     This is a class to define posts for blog app
     '''
-    author = models.ForeignKey(User,on_delete=models.CASCADE)
+    # author = models.ForeignKey(Profile,on_delete=models.CASCADE)
+    author = models.ForeignKey('accounts.Profile',on_delete=models.CASCADE)
     # author = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
 
 
