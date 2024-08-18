@@ -14,7 +14,6 @@ class Post(models.Model):
     author = models.ForeignKey('accounts.Profile',on_delete=models.CASCADE)
     # author = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
 
-
     image = models.ImageField(null=True,blank=True)
     title = models.CharField(max_length=250)
     content = models.TextField()
