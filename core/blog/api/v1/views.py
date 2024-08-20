@@ -7,6 +7,8 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import mixins
+from rest_framework import viewsets
+
 
 from .serializer import PostSerlizer
 from blog.models import Post
@@ -62,7 +64,9 @@ def postDetail(request,id):
 
 """
 
+# Example for APIView
 """
+from rest_framework.views import APIView
 class PostList(APIView):
     '''getting a list of posts and creating new posts'''
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -79,14 +83,7 @@ class PostList(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
-"""
-class PostList(ListCreateAPIView):
-    '''getting a list of posts and creating new posts'''
-    permission_classes = [IsAuthenticatedOrReadOnly]
-    serializer_class = PostSerlizer
-    queryset = Post.objects.filter(status=True)
 
-"""
 class PostDetail(APIView):
     '''getting detail of the post and edit plus remove it.'''
     permission_classes = [IsAuthenticated]
@@ -111,6 +108,13 @@ class PostDetail(APIView):
         post.delete()
         return Response({'detail':'item remove successfully.'},status=status.HTTP_204_NO_CONTENT)
 """
+
+class PostList(ListCreateAPIView):
+    '''getting a list of posts and creating new posts'''
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    serializer_class = PostSerlizer
+    queryset = Post.objects.filter(status=True)
+
 class PostDetail(RetrieveUpdateDestroyAPIView):
     '''getting detail of the post and edit plus remove it.'''
     permission_classes = [IsAuthenticated]
@@ -118,3 +122,28 @@ class PostDetail(RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.filter(status=True)
     #lookup_field = 'id' #custom name for parameter or change it on urls.py (default : pk)  
 
+# Example foe View set in class base view
+class PostViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    serializer_class = PostSerlizer
+    queryset = Post.objects.filter(status=True)
+
+    def list(self, request):
+        serializer = self.serializer_class(self.queryset,many=True)
+        return Response(serializer.data)
+    def retrieve(self, request, pk=None):
+        queryset = get_object_or_404(self.queryset, pk=pk)
+        serializer = self.serializer_class(queryset)
+        return Response(serializer.data)
+    def create(self,request):
+        pass
+    def update(self, request, pk=None):
+        pass
+
+    def partial_update(self, request, pk=None):
+        pass
+
+    def destroy(self, request, pk=None):
+        post = get_object_or_404(Post,pk=pk,status=True)
+        post.delete()
+        return Response({'detail':'item remove successfully.'},status=status.HTTP_204_NO_CONTENT)
