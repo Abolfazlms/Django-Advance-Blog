@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from rest_framework.views import APIView
-from rest_framework.generics import GenericAPIView, ListCreateAPIView
+from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import mixins
 
 from .serializer import PostSerlizer
@@ -111,23 +111,10 @@ class PostDetail(APIView):
         post.delete()
         return Response({'detail':'item remove successfully.'},status=status.HTTP_204_NO_CONTENT)
 """
-class PostDetail(GenericAPIView, mixins.RetrieveModelMixin,mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+class PostDetail(RetrieveUpdateDestroyAPIView):
     '''getting detail of the post and edit plus remove it.'''
     permission_classes = [IsAuthenticated]
     serializer_class = PostSerlizer
     queryset = Post.objects.filter(status=True)
     #lookup_field = 'id' #custom name for parameter or change it on urls.py (default : pk)  
-
-    def get(self, request, *args, **kwargs):        
-        '''retrieving the post data'''
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        '''editing the post data'''
-        return self.update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        '''deleting the post data'''
-        return self.destroy(request, *args, **kwargs)
-
 
