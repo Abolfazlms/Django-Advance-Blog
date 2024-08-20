@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from rest_framework.views import APIView
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, ListCreateAPIView
 from rest_framework import mixins
 
 from .serializer import PostSerlizer
@@ -80,18 +80,11 @@ class PostList(APIView):
         serializer.save()
         return Response(serializer.data)
 """
-class PostList(GenericAPIView,mixins.ListModelMixin,mixins.CreateModelMixin):
+class PostList(ListCreateAPIView):
     '''getting a list of posts and creating new posts'''
     permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = PostSerlizer
     queryset = Post.objects.filter(status=True)
-
-    def get(self, request, *args, **kwargs):
-        '''retrieving a list of posts'''
-        return self.list(self, request, *args, **kwargs)
-    def post(self, request, *args, **kwargs):
-        '''creating a post with provided data'''
-        return self.create(request, *args, **kwargs)
 
 class PostDetail(APIView):
     '''getting detail of the post and edit plus remove it.'''
