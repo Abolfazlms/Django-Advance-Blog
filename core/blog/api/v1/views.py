@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView
 
 from .serializer import PostSerlizer
 from blog.models import Post
@@ -57,9 +58,10 @@ def postDetail(request,id):
     elif request.method == 'DELETE':
         post.delete()
         return Response({'detail':'item remove successfully.'},status=status.HTTP_204_NO_CONTENT)
+
 """
 
-
+"""
 class PostList(APIView):
     '''getting a list of posts and creating new posts'''
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -76,7 +78,24 @@ class PostList(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+"""
+class PostList(GenericAPIView):
+    '''getting a list of posts and creating new posts'''
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    serializer_class = PostSerlizer
+    queryset = Post.objects.filter(status=True)
 
+    def get(self,request):
+        '''retrieving a list of posts'''
+        queryset = self.get_queryset()
+        serializer = self.serializer_class(queryset,many=True)
+        return Response(serializer.data)
+    def post(self,request):
+        '''creating a post with provided data'''
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
 
 class PostDetail(APIView):
     '''getting detail of the post and edit plus remove it.'''
