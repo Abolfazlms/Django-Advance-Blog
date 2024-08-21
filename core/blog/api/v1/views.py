@@ -1,5 +1,5 @@
 
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework import status
@@ -109,6 +109,8 @@ class PostDetail(APIView):
         return Response({'detail':'item remove successfully.'},status=status.HTTP_204_NO_CONTENT)
 """
 
+# Example for GenericAPIView
+"""
 class PostList(ListCreateAPIView):
     '''getting a list of posts and creating new posts'''
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -121,12 +123,16 @@ class PostDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = PostSerializer
     queryset = Post.objects.filter(status=True)
     #lookup_field = 'id' #custom name for parameter or change it on urls.py (default : pk)  
-
+"""
 # Example foe View set in class base view
 class PostModelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = PostSerializer
     queryset = Post.objects.filter(status=True)
+
+    @action(methods=['get'], detail=False)
+    def get_ok(self, request):
+        return Response({'detail':'ok'})
 
 class CategoryModelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
