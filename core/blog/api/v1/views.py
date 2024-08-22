@@ -9,6 +9,8 @@ from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveU
 from rest_framework import mixins
 from rest_framework import viewsets
 
+from.permissions import IsOwnerOrReadOnly
+
 
 from .serializer import PostSerializer, CategorySerializer
 from blog.models import Post, Category
@@ -126,7 +128,7 @@ class PostDetail(RetrieveUpdateDestroyAPIView):
 """
 # Example foe View set in class base view
 class PostModelViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     serializer_class = PostSerializer
     queryset = Post.objects.filter(status=True)
 
