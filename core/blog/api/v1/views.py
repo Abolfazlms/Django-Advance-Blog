@@ -146,7 +146,6 @@ class PostModelViewSet(viewsets.ModelViewSet):
     @action(methods=['get'], detail=False)
     def get_ok(self, request):
         return Response({'detail':'ok'})
-
 class CategoryModelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = CategorySerializer
