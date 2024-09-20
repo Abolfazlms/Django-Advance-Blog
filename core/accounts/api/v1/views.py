@@ -27,6 +27,11 @@ from .serializers import (
 )
 
 from django.core.mail import send_mail
+from mail_templated import EmailMessage, send_mail
+
+from ..utils import EmailThread
+
+from rest_framework_simplejwt.tokens import RefreshToken
 
 User = get_user_model()
 class RegistrationApiView(generics.GenericAPIView):
@@ -96,11 +101,23 @@ class ProfileAPIView(generics.RetrieveUpdateAPIView):
         return obj
 class TestEmailSend(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
-        send_mail(
-            "Subject here",
-            "Here is the message.",
-            "from@example.com",
-            ["to@example.com"],
-            fail_silently=False,
-        )
+        # send_mail(
+        #     "Subject here",
+        #     "Here is the message.",
+        #     "from@example.com",
+        #     ["to@example.com"],
+        #     fail_silently=False,
+        # )        
+        # send_mail('email/hello.tpl', {'name': 'ali'}, 'admin@admin.com', ['testmail@gmail.com'])
+        self.email = 'admin@admin.com'
+        user_obj = get_object_or_404(User, email = self.email)
+        token = self.get_tokens_for_user(user_obj)
+        email_obj = EmailMessage('email/hello.tpl', {'token': token}, 'admin@admin.com', to=[self.email])
+        EmailThread(email_obj).start()
+
         return Response("email sent.")
+    
+    def get_tokens_for_user(self, user):
+        refresh = RefreshToken.for_user(user)
+        return str(refresh.access_token)
+
