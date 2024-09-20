@@ -15,8 +15,8 @@ from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 class CustomUserAdmin(UserAdmin):
     model = User
     # add_form = CustomUserCreationForm
-    list_display = ('email','is_superuser','is_active')
-    list_filter = ('email','is_superuser','is_active')
+    list_display = ('email','is_superuser','is_active','is_verified')
+    list_filter = ('email','is_superuser','is_active','is_verified')
     search_fields = ('email',)
     ordering = ('email',)
 
@@ -25,7 +25,7 @@ class CustomUserAdmin(UserAdmin):
           {"fields":
             ("email", "password")
             }),
-        ("Permissions", {"fields": ("is_staff", "is_active", "is_superuser")}),
+        ("Permissions", {"fields": ("is_staff", "is_active", "is_superuser", "is_verified")}),
         ("Group Permissions", {"fields": ("groups", "user_permissions")}),
         ("Important Date", {"fields": ("last_login",)}),
     )
@@ -34,7 +34,7 @@ class CustomUserAdmin(UserAdmin):
             "classes": ("wide",),
             "fields": (
                 "email", "password1", "password2", "is_staff",
-                "is_active","is_superuser"
+                "is_active","is_superuser","is_verified"
             )}
         ),
     )
