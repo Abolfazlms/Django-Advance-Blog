@@ -50,8 +50,6 @@ urlpatterns = [
         views.CustomTokenObtainPairView.as_view(),
         name="jwt-create",
     ),
-    path(
-        "api/token/refresh/", TokenRefreshView.as_view(), name="jwt_refresh"
-    ),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="jwt_refresh"),
     path("jwt/verify", TokenVerifyView.as_view(), name="jwt_verify"),
 ]

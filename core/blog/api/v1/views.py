@@ -1,10 +1,15 @@
 # from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.decorators import action
+
+# from rest_framework.permissions import (
+#     IsAuthenticated,
+#     IsAuthenticatedOrReadOnly,
+# )
 from rest_framework.permissions import (
-    IsAuthenticated,
     IsAuthenticatedOrReadOnly,
 )
 from rest_framework.response import Response
+
 # from rest_framework import status
 # from rest_framework.views import APIView
 # from rest_framework.generics import (
@@ -19,7 +24,8 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 
 # from django.shortcuts import get_object_or_404
 from .paginations import DefaultPagination
-from .permissions import IsOwnerOrReadOnly
+
+# from .permissions import IsOwnerOrReadOnly
 from .serializer import PostSerializer, CategorySerializer
 from blog.models import Post, Category
 

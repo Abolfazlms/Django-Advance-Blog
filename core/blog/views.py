@@ -8,6 +8,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
+
 # from django.views.generic.edit import FormView
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,
@@ -15,6 +16,7 @@ from django.contrib.auth.mixins import (
 )
 from .models import Post
 from .forms import PostForms
+
 # Create your views here.
 # Function Base View show a template
 '''
