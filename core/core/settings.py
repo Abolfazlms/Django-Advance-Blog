@@ -179,9 +179,9 @@ CORS_ALLOW_ALL_ORIGINS = True
 # celery configs
 CELERY_BROKER_URL = "redis://redis:6379/1"
 # redis://hostname(local host but we use redis because this custom name of our service in docker)/database
-CELERY_BEAT_SCHEDULE={
-    'send_email':{
-        'task':'accounts.tasks.sendEmail',
-        'schedule':21
-    }
-}
+# CELERY_BEAT_SCHEDULE={
+#     'send_email':{
+#         'task':'accounts.tasks.sendEmail',
+#         'schedule':21
+#     }
+# }
