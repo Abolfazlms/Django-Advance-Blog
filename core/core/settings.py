@@ -175,3 +175,7 @@ EMAIL_PORT = 25
 #     "http://127.0.0.1:5500",
 # ]
 CORS_ALLOW_ALL_ORIGINS = True
+
+# celery configs
+CELERY_BROKER_URL = "redis://redis:6379/1"
+# redis://hostname(local host but we use redis because this custom name of our service in docker)/database
