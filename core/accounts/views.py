@@ -1,6 +1,6 @@
 # from django.shortcuts import render
 from django.http import HttpResponse
-import time
+# import time
 from .tasks import sendEmail
 # Create your views here.
 def send_email(request):
