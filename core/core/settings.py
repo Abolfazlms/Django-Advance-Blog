@@ -186,3 +186,14 @@ CELERY_BROKER_URL = "redis://redis:6379/1"
 #         'schedule':21
 #     }
 # }
+# caching configs
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/2",
+        # "TIMEOUT":30,
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}
