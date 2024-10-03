@@ -45,11 +45,12 @@ schema_view = get_schema_view(
 
 
 def indexView(request):
-    return HttpResponse('<h1>Index Page</h1>')
+    return HttpResponse("<h1>Index Page</h1>")
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("",indexView,name='index-view'),
+    path("", indexView, name="index-view"),
     path("blog/", include("blog.urls")),
     path("accounts/", include("accounts.urls")),
     path("api-auth/", include("rest_framework.urls")),
