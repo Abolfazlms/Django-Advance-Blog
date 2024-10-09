@@ -50,3 +50,4 @@ services:
 volumes:
   static_volume:
   media_volume:
+  smtp4dev-data:

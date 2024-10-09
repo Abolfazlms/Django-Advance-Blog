@@ -2,35 +2,20 @@ from rest_framework import serializers
 from blog.models import Post, Category
 from accounts.models import Profile
 
-# class PostSerlizer(serializers.Serializer):
-#     id = serializers.IntegerField()
-#     title = serializers.CharField(max_length=255)
-
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        # fields = '__all__'
         fields = ["id", "name"]
 
 
 class PostSerializer(serializers.ModelSerializer):
-
-    # content = serializers.ReadOnlyField()
-    # content = serializers.CharField(read_only=True)
     snippet = serializers.ReadOnlyField(source="get_snippet")
     relative_url = serializers.URLField(source="get_absolute_api_url", read_only=True)
     absolute_url = serializers.SerializerMethodField(method_name="get_abs_url")
 
-    # category = serializers.SlugRelatedField(
-    #     many=False,
-    #     slug_field='name',
-    #     queryset=Category.objects.all()
-    #     )
-    # category = CategorySerializer()
     class Meta:
         model = Post
-        # fields = '__all__'
         fields = [
             "id",
             "title",
@@ -38,6 +23,7 @@ class PostSerializer(serializers.ModelSerializer):
             "content",
             "author",
             "category",
+            "comments",
             "snippet",
             "status",
             "relative_url",

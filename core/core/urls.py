@@ -52,6 +52,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", indexView, name="index-view"),
     path("blog/", include("blog.urls")),
+    path("blog/comments/", include("comments.urls")),
     path("accounts/", include("accounts.urls")),
     path("api-auth/", include("rest_framework.urls")),
     path("api-docs/", include_docs_urls(title="API sample")),
